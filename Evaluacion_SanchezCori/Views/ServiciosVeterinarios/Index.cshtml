@@ -1,6 +1,87 @@
-﻿namespace Evaluacion_SanchezCori.Views.ServiciosVeterinarios
-{
-    public class Index
-    {
-    }
+﻿@model IEnumerable<ServicioVeterinario>
+
+@{
+    ViewData["Title"] = "Servicios";
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="titulo-verde">
+            Servicios veterinarios
+        </h2>
+
+        <p class="text-muted">
+            Conoce nuestros servicios disponibles.
+        </p>
+
+    </div>
+
+    @if (User.IsInRole("Administrador"))
+    {
+        <a asp-action="Create"
+           class="btn btn-militar">
+
+            + Nuevo servicio
+
+        </a>
+    }
+
+</div>
+
+<div class="row g-4">
+
+    @foreach (var servicio in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card tarjeta-verde h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="icono-card">
+                        🩺
+                    </div>
+
+                    <h4>
+                        @servicio.Nombre
+                    </h4>
+
+                    <p class="text-muted">
+                        @servicio.Descripcion
+                    </p>
+
+                    <h5 class="titulo-verde">
+                        Bs @servicio.Precio.ToString("0.00")
+                    </h5>
+
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <hr />
+
+                        <a asp-action="Edit"
+                           asp-route-id="@servicio.Id"
+                           class="btn btn-outline-militar btn-sm">
+
+                            Editar
+
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@servicio.Id"
+                           class="btn btn-outline-danger btn-sm">
+
+                            Eliminar
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>

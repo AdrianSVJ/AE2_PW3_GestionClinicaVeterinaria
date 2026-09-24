@@ -1,6 +1,180 @@
-﻿namespace Evaluacion_SanchezCori.Views.Citas
-{
-    public class Index
-    {
-    }
+﻿@model IEnumerable<Cita>
+
+@{
+    ViewData["Title"] = "Citas";
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="titulo-verde">
+
+            @if (User.IsInRole("Administrador"))
+            {
+                <span>Citas registradas</span>
+            }
+            else
+            {
+                <span>Mis citas</span>
+            }
+
+        </h2>
+
+        <p class="text-muted">
+            Consulta las citas registradas en el sistema.
+        </p>
+
+    </div>
+
+    @if (User.IsInRole("Cliente"))
+    {
+        <a asp-action="Create"
+           class="btn btn-militar">
+
+            + Solicitar cita
+
+        </a>
+    }
+
+</div>
+
+<div class="table-responsive tabla-card">
+
+    <table class="table align-middle mb-0">
+
+        <thead>
+
+            <tr>
+
+                @if (User.IsInRole("Administrador"))
+                {
+                    <th>
+                        Cliente
+                    </th>
+                }
+
+                <th>Mascota</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+
+                @if (User.IsInRole("Administrador"))
+                {
+                    <th>
+                        Cambiar estado
+                    </th>
+                }
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var cita in Model)
+            {
+                <tr>
+
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <td>
+                            @cita.Mascota?.Usuario?.NombreCompleto
+                        </td>
+                    }
+
+                    <td>
+                        @cita.Mascota?.Nombre
+                    </td>
+
+                    <td>
+                        @cita.ServicioVeterinario?.Nombre
+                    </td>
+
+                    <td>
+                        @cita.FechaCita.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+
+                        @if (cita.Estado == EstadoCita.Pendiente)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pendiente
+                            </span>
+                        }
+                        else if (cita.Estado == EstadoCita.Atendida)
+                        {
+                            <span class="badge bg-success">
+                                Atendida
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Cancelada
+                            </span>
+                        }
+
+                    </td>
+
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <td>
+
+                            <form asp-action="CambiarEstado"
+                                  method="post"
+                                  class="d-flex gap-2">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@cita.Id" />
+
+                                <select name="estado"
+                                        class="form-select form-select-sm">
+
+                                    @foreach (
+                                        EstadoCita estado
+                                        in Enum.GetValues(typeof(EstadoCita)))
+                                    {
+                                        if (estado == cita.Estado)
+                                        {
+                                            <option value="@((int)estado)"
+                                                    selected>
+
+                                                @estado
+
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@((int)estado)">
+
+                                                @estado
+
+                                            </option>
+                                        }
+                                    }
+
+                                </select>
+
+                                <button type="submit"
+                                        class="btn btn-militar btn-sm">
+
+                                    Guardar
+
+                                </button>
+
+                            </form>
+
+                        </td>
+                    }
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

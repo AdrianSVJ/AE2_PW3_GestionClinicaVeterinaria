@@ -1,6 +1,89 @@
-﻿namespace Evaluacion_SanchezCori.Views.Mascotas
+﻿@model Mascota
+
+@{
+    ViewData["Title"] = "Editar mascota";
+}
+
+<div class="formulario-contenedor">
+
+    <h2 class="titulo-verde">
+        Editar mascota
+    </h2>
+
+    <form asp-action="Edit"
+          method="post">
+
+        <input asp-for="Id"
+               type="hidden" />
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3">
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Nombre"
+                   class="form-label">
+            </label>
+
+            <input asp-for="Nombre"
+                   class="form-control" />
+
+            <span asp-validation-for="Nombre"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Especie"
+                   class="form-label">
+            </label>
+
+            <input asp-for="Especie"
+                   class="form-control" />
+
+            <span asp-validation-for="Especie"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <div class="mb-4">
+
+            <label asp-for="Raza"
+                   class="form-label">
+            </label>
+
+            <input asp-for="Raza"
+                   class="form-control" />
+
+            <span asp-validation-for="Raza"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <button class="btn btn-militar"
+                type="submit">
+
+            Guardar cambios
+
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts
 {
-    public class Edit
-    {
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

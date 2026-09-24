@@ -1,22 +1,348 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+:root {
+    --verde-militar: #4f5b3a;
+    --verde-militar-oscuro: #35402a;
+    --verde-medio: #66724d;
+    --verde-pastel: #dce8d4;
+    --verde-pastel-claro: #eef4e9;
+    --verde-fondo: #f7faf5;
+    --blanco: #ffffff;
+    --texto: #30372b;
+    --gris: #73796e;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    font-size: 15px;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--verde-fondo);
+    color: var(--texto);
+    display: flex;
+    flex-direction: column;
+}
+
+.contenido-principal {
+    flex: 1;
+    padding-top: 35px;
+    padding-bottom: 50px;
+}
+
+
+/* ===============================
+   NAVBAR
+================================ */
+
+.navbar-principal {
+    background: linear-gradient( 120deg, var(--verde-militar-oscuro), var(--verde-militar) );
+    padding-top: 14px;
+    padding-bottom: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .12);
+}
+
+.navbar-brand {
+    font-size: 1.35rem;
+    color: white !important;
+}
+
+.navbar-principal .nav-link {
+    color: rgba(255, 255, 255, .85);
+    margin: 0 4px;
+    transition: .2s;
+}
+
+    .navbar-principal .nav-link:hover {
+        color: white;
+    }
+
+.usuario-navbar {
+    color: rgba(255, 255, 255, .9);
+    font-size: .9rem;
+}
+
+
+/* ===============================
+   BOTONES
+================================ */
+
+.btn-militar {
+    background-color: var(--verde-militar);
+    border: 1px solid var(--verde-militar);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 18px;
+    transition: .2s ease;
+}
+
+    .btn-militar:hover {
+        background-color: var(--verde-militar-oscuro);
+        border-color: var(--verde-militar-oscuro);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+.btn-outline-militar {
+    color: var(--verde-militar);
+    border: 1px solid var(--verde-militar);
+    background: transparent;
+    border-radius: 10px;
+    padding: 10px 18px;
+}
+
+    .btn-outline-militar:hover {
+        background-color: var(--verde-militar);
+        color: white;
+    }
+
+.btn-claro {
+    background-color: var(--verde-pastel);
+    color: var(--verde-militar-oscuro);
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+    .btn-claro:hover {
+        background-color: white;
+        color: var(--verde-militar-oscuro);
+    }
+
+
+/* ===============================
+   HERO
+================================ */
+
+.hero-verde {
+    background: linear-gradient( 135deg, var(--verde-pastel-claro), var(--verde-pastel) );
+    border-radius: 25px;
+    padding: 70px 60px;
+    box-shadow: 0 10px 35px rgba(62, 74, 48, .10);
+    overflow: hidden;
+}
+
+    .hero-verde h1 {
+        color: var(--verde-militar-oscuro);
+        line-height: 1.15;
+        margin-bottom: 22px;
+    }
+
+        .hero-verde h1 span {
+            color: var(--verde-militar);
+        }
+
+    .hero-verde .lead {
+        color: #596151;
+        max-width: 650px;
+        margin-bottom: 28px;
+    }
+
+.badge-verde {
+    background-color: var(--verde-militar);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.huella-principal {
+    font-size: 150px;
+    filter: drop-shadow( 0 15px 17px rgba(53, 64, 42, .20) );
+}
+
+
+/* ===============================
+   TARJETAS
+================================ */
+
+.tarjeta-verde {
+    border: 0;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 8px 30px rgba(62, 74, 48, .08);
+    transition: .25s ease;
+}
+
+    .tarjeta-verde:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(62, 74, 48, .14);
+    }
+
+    .tarjeta-verde h4 {
+        color: var(--verde-militar-oscuro);
+        font-weight: 700;
+    }
+
+.icono-card {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--verde-pastel);
+    border-radius: 16px;
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.titulo-verde {
+    color: var(--verde-militar-oscuro);
+    font-weight: 700;
+}
+
+.link-verde {
+    color: var(--verde-militar);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .link-verde:hover {
+        color: var(--verde-militar-oscuro);
+        text-decoration: underline;
+    }
+
+
+/* ===============================
+   FORMULARIOS
+================================ */
+
+.formulario-card,
+.formulario-contenedor {
+    background: white;
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(62, 74, 48, .10);
+}
+
+.formulario-contenedor {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 35px;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 11px 13px;
+    border: 1px solid #ccd4c5;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--verde-medio);
+        box-shadow: 0 0 0 .2rem rgba(102, 114, 77, .15);
+    }
+
+.form-label {
+    font-weight: 600;
+    color: var(--verde-militar-oscuro);
+}
+
+
+/* ===============================
+   TABLAS
+================================ */
+
+.tabla-card {
+    background-color: white;
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 8px 30px rgba(62, 74, 48, .08);
+}
+
+.table thead th {
+    background-color: var(--verde-pastel);
+    color: var(--verde-militar-oscuro);
+    border: 0;
+    padding: 14px;
+}
+
+.table tbody td {
+    padding: 14px;
+    vertical-align: middle;
+}
+
+
+/* ===============================
+   DASHBOARD
+================================ */
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 18px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 30px rgba(62, 74, 48, .08);
+}
+
+.dashboard-icon {
+    width: 58px;
+    height: 58px;
+    background-color: var(--verde-pastel);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+}
+
+.dashboard-card h2 {
+    color: var(--verde-militar-oscuro);
+    margin: 0;
+    font-weight: 700;
+}
+
+
+/* ===============================
+   MENSAJES
+================================ */
+
+.alert-success {
+    background-color: var(--verde-pastel);
+    color: var(--verde-militar-oscuro);
+    border: 0;
+    border-radius: 12px;
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+.footer-verde {
+    background-color: var(--verde-militar-oscuro);
+    color: white;
+    padding: 32px 0;
+    margin-top: auto;
+}
+
+    .footer-verde small {
+        color: rgba(255, 255, 255, .70);
+    }
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+
+    .hero-verde {
+        padding: 40px 25px;
+    }
+
+        .hero-verde h1 {
+            font-size: 2.2rem;
+        }
+
+    .huella-principal {
+        font-size: 90px;
+        margin-top: 35px;
+    }
+
+    .contenido-principal {
+        padding-top: 25px;
+    }
 }

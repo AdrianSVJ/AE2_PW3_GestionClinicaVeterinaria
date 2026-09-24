@@ -1,6 +1,45 @@
-﻿namespace Evaluacion_SanchezCori.Views.Mascotas
-{
-    public class Delete
-    {
-    }
+﻿@model Mascota
+
+@{
+    ViewData["Title"] = "Eliminar mascota";
 }
+
+<div class="formulario-contenedor text-center">
+
+    <div style="font-size:70px;">
+        🐾
+    </div>
+
+    <h2 class="text-danger mt-3">
+        Eliminar mascota
+    </h2>
+
+    <p>
+        ¿Estás seguro de que deseas eliminar a
+        <strong>@Model.Nombre</strong>?
+    </p>
+
+    <form asp-action="DeleteConfirmed"
+          method="post">
+
+        <input type="hidden"
+               name="id"
+               value="@Model.Id" />
+
+        <button type="submit"
+                class="btn btn-danger">
+
+            Sí, eliminar
+
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>

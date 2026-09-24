@@ -1,0 +1,266 @@
+﻿@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="mb-4">
+
+    <h2 class="titulo-verde">
+        Dashboard administrativo
+    </h2>
+
+    <p class="text-muted">
+        Resumen general de la clínica veterinaria.
+    </p>
+
+</div>
+
+
+<div class="row g-4">
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                🩺
+            </div>
+
+            <div>
+
+                <span class="text-muted">
+                    Servicios
+                </span>
+
+                <h2>
+                    @Model.TotalServicios
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                🐾
+            </div>
+
+            <div>
+
+                <span class="text-muted">
+                    Mascotas
+                </span>
+
+                <h2>
+                    @Model.TotalMascotas
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                👥
+            </div>
+
+            <div>
+
+                <span class="text-muted">
+                    Usuarios
+                </span>
+
+                <h2>
+                    @Model.TotalUsuarios
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📅
+            </div>
+
+            <div>
+
+                <span class="text-muted">
+                    Citas
+                </span>
+
+                <h2>
+                    @Model.TotalCitas
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card tarjeta-verde mt-4">
+
+    <div class="card-body p-4">
+
+        <h4 class="titulo-verde mb-4">
+            Citas por mes
+        </h4>
+
+        <canvas id="graficoCitas"
+                style="width:100%; height:350px;">
+        </canvas>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        const meses =
+            @Html.Raw(
+                System.Text.Json.JsonSerializer.Serialize(
+                    Model.Meses
+                )
+            );
+
+        const cantidades =
+            @Html.Raw(
+                System.Text.Json.JsonSerializer.Serialize(
+                    Model.Cantidades
+                )
+            );
+
+        const canvas =
+            document.getElementById("graficoCitas");
+
+        const ctx =
+            canvas.getContext("2d");
+
+        const escala =
+            window.devicePixelRatio || 1;
+
+        const ancho =
+            canvas.clientWidth;
+
+        const alto =
+            350;
+
+        canvas.width =
+            ancho * escala;
+
+        canvas.height =
+            alto * escala;
+
+        ctx.scale(
+            escala,
+            escala
+        );
+
+        const margenIzquierdo = 45;
+        const margenInferior = 45;
+        const margenSuperior = 30;
+
+        const anchoDisponible =
+            ancho - margenIzquierdo - 20;
+
+        const altoDisponible =
+            alto -
+            margenInferior -
+            margenSuperior;
+
+        const maximo =
+            Math.max(
+                ...cantidades,
+                1
+            );
+
+        const espacio =
+            anchoDisponible /
+            cantidades.length;
+
+        ctx.font =
+            "12px Arial";
+
+        ctx.textAlign =
+            "center";
+
+        for (
+            let i = 0;
+            i < cantidades.length;
+            i++
+        )
+        {
+            const altura =
+                (cantidades[i] / maximo)
+                * altoDisponible;
+
+            const anchoBarra =
+                espacio * 0.55;
+
+            const x =
+                margenIzquierdo +
+                i * espacio +
+                espacio * 0.22;
+
+            const y =
+                margenSuperior +
+                altoDisponible -
+                altura;
+
+            ctx.fillStyle =
+                "#66724d";
+
+            ctx.fillRect(
+                x,
+                y,
+                anchoBarra,
+                altura
+            );
+
+            ctx.fillStyle =
+                "#35402a";
+
+            ctx.fillText(
+                cantidades[i],
+                x + anchoBarra / 2,
+                Math.max(
+                    y - 8,
+                    15
+                )
+            );
+
+            ctx.fillText(
+                meses[i],
+                x + anchoBarra / 2,
+                alto - 15
+            );
+        }
+
+    </script>
+}

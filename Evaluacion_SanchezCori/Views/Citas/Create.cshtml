@@ -1,6 +1,105 @@
-﻿namespace Evaluacion_SanchezCori.Views.Citas
+﻿@model Cita
+
+@{
+    ViewData["Title"] = "Solicitar cita";
+}
+
+<div class="formulario-contenedor">
+
+    <h2 class="titulo-verde">
+        Solicitar cita
+    </h2>
+
+    <p class="text-muted">
+        Selecciona tu mascota, el servicio y la fecha.
+    </p>
+
+    <form asp-action="Create"
+          method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3">
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="MascotaId"
+                   class="form-label">
+            </label>
+
+            <select asp-for="MascotaId"
+                    asp-items="ViewBag.Mascotas"
+                    class="form-select">
+
+                <option value="">
+                    Seleccione una mascota
+                </option>
+
+            </select>
+
+            <span asp-validation-for="MascotaId"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="ServicioVeterinarioId"
+                   class="form-label">
+            </label>
+
+            <select asp-for="ServicioVeterinarioId"
+                    asp-items="ViewBag.Servicios"
+                    class="form-select">
+
+                <option value="">
+                    Seleccione un servicio
+                </option>
+
+            </select>
+
+            <span asp-validation-for="ServicioVeterinarioId"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <div class="mb-4">
+
+            <label asp-for="FechaCita"
+                   class="form-label">
+            </label>
+
+            <input asp-for="FechaCita"
+                   class="form-control"
+                   min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+            <span asp-validation-for="FechaCita"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-militar">
+
+            Solicitar cita
+
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts
 {
-    public class Create
-    {
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

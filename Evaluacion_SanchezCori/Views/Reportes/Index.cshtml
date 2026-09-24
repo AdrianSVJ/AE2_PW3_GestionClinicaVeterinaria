@@ -1,6 +1,129 @@
-﻿namespace Evaluacion_SanchezCori.Views.Reportes
-{
-    public class Index
-    {
-    }
+﻿@{
+    ViewData["Title"] = "Reportes";
 }
+
+<div class="mb-4">
+
+    <h2 class="titulo-verde">
+        Reportes PDF
+    </h2>
+
+    <p class="text-muted">
+        Genera reportes utilizando la información
+        registrada en la base de datos.
+    </p>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+
+        <div class="card tarjeta-verde h-100">
+
+            <div class="card-body p-4">
+
+                <div class="icono-card">
+                    📄
+                </div>
+
+                <h4>
+                    Listado general de citas
+                </h4>
+
+                <p class="text-muted">
+                    Incluye mascota, cliente, servicio,
+                    fecha y estado.
+                </p>
+
+                <a asp-action="CitasGenerales"
+                   class="btn btn-militar">
+
+                    Generar PDF
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card tarjeta-verde h-100">
+
+            <div class="card-body p-4">
+
+                <div class="icono-card">
+                    👤
+                </div>
+
+                <h4>
+                    Citas por usuario
+                </h4>
+
+                <form asp-action="CitasPorUsuario"
+                      method="get">
+
+                    <select name="usuarioId"
+                            asp-items="ViewBag.Clientes"
+                            class="form-select mb-3"
+                            required>
+
+                        <option value="">
+                            Seleccione un cliente
+                        </option>
+
+                    </select>
+
+                    <button type="submit"
+                            class="btn btn-militar">
+
+                        Generar PDF
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card tarjeta-verde h-100">
+
+            <div class="card-body p-4">
+
+                <div class="icono-card">
+                    📊
+                </div>
+
+                <h4>
+                    Servicios más solicitados
+                </h4>
+
+                <p class="text-muted">
+                    Muestra los servicios ordenados
+                    por cantidad de citas.
+                </p>
+
+                <a asp-action="ServiciosSolicitados"
+                   class="btn btn-militar">
+
+                    Generar PDF
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

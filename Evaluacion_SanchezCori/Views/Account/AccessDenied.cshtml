@@ -1,6 +1,27 @@
-﻿namespace Evaluacion_SanchezCori.Views.Account
-{
-    public class AccessDenied
-    {
-    }
+﻿@{
+    ViewData["Title"] = "Acceso denegado";
 }
+
+<div class="text-center py-5">
+
+    <div style="font-size:80px;">
+        🔒
+    </div>
+
+    <h1 class="titulo-verde mt-3">
+        Acceso denegado
+    </h1>
+
+    <p class="text-muted">
+        No tienes permisos para acceder a esta sección.
+    </p>
+
+    <a asp-controller="Home"
+       asp-action="Index"
+       class="btn btn-militar">
+
+        Volver al inicio
+
+    </a>
+
+</div>
