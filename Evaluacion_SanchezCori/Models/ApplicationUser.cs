@@ -1,6 +1,16 @@
-﻿namespace Evaluacion_SanchezCori.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace Evaluacion_SanchezCori.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser
     {
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Nombre completo")]
+        public string NombreCompleto { get; set; } = string.Empty;
+
+        public ICollection<Mascota> Mascotas { get; set; }
+            = new List<Mascota>();
     }
 }

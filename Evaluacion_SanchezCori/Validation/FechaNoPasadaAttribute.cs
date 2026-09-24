@@ -1,6 +1,24 @@
-﻿namespace Evaluacion_SanchezCori.Validation
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Evaluacion_SanchezCori.Validation
 {
-    public class FechaNoPasadaAttribute
+    public class FechaNoPasadaAttribute : ValidationAttribute
     {
+        protected override ValidationResult? IsValid(
+            object? value,
+            ValidationContext validationContext)
+        {
+            if (value is DateTime fecha)
+            {
+                if (fecha.Date < DateTime.Today)
+                {
+                    return new ValidationResult(
+                        "La fecha de la cita no puede ser anterior a hoy."
+                    );
+                }
+            }
+
+            return ValidationResult.Success;
+        }
     }
 }

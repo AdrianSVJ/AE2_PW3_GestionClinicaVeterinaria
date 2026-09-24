@@ -1,16 +1,20 @@
-using Evaluacion_SanchezCori.Models;
+using Evaluacion_SanchezCori.Data;
+using Evaluacion_SanchezCori.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Evaluacion_SanchezCori.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,15 +22,57 @@ namespace Evaluacion_SanchezCori.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Dashboard()
         {
-            return View();
-        }
+            int anio = DateTime.Today.Year;
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var datos = await _context.Citas
+                .Where(c => c.FechaCita.Year == anio)
+                .GroupBy(c => c.FechaCita.Month)
+                .Select(g => new
+                {
+                    Mes = g.Key,
+                    Cantidad = g.Count()
+                })
+                .ToDictionaryAsync(
+                    x => x.Mes,
+                    x => x.Cantidad
+                );
+
+            var cultura =
+                new CultureInfo("es-ES");
+
+            var model = new DashboardViewModel
+            {
+                TotalServicios =
+                    await _context.ServiciosVeterinarios.CountAsync(),
+
+                TotalMascotas =
+                    await _context.Mascotas.CountAsync(),
+
+                TotalUsuarios =
+                    await _context.Users.CountAsync(),
+
+                TotalCitas =
+                    await _context.Citas.CountAsync()
+            };
+
+            for (int mes = 1; mes <= 12; mes++)
+            {
+                model.Meses.Add(
+                    cultura.DateTimeFormat
+                        .GetAbbreviatedMonthName(mes)
+                );
+
+                model.Cantidades.Add(
+                    datos.ContainsKey(mes)
+                        ? datos[mes]
+                        : 0
+                );
+            }
+
+            return View(model);
         }
     }
 }
